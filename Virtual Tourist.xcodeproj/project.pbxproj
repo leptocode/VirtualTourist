@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 51;
+	objectVersion = 53;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -21,6 +21,7 @@
 		02DC89A3200ABD9A00086A90 /* Photo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02DC899F200ABD9A00086A90 /* Photo.swift */; };
 		02DC89A5200ABD9A00086A90 /* Pin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02DC89A1200ABD9A00086A90 /* Pin.swift */; };
 		02E87A621FE7D84800163537 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02E87A611FE7D84800163537 /* ViewController.swift */; };
+		CC7776062505AE35006F6C32 /* PhotoUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC7776052505AE35006F6C32 /* PhotoUser.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -40,6 +41,7 @@
 		02DC899F200ABD9A00086A90 /* Photo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Photo.swift; sourceTree = "<group>"; };
 		02DC89A1200ABD9A00086A90 /* Pin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Pin.swift; sourceTree = "<group>"; };
 		02E87A611FE7D84800163537 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		CC7776052505AE35006F6C32 /* PhotoUser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoUser.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,6 +60,7 @@
 			children = (
 				02298AB91FD8221F00320302 /* Virtual Tourist */,
 				02298AB81FD8221F00320302 /* Products */,
+				6AB99C2BD2F6E89BEF671482 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -102,6 +105,7 @@
 				02DC89A1200ABD9A00086A90 /* Pin.swift */,
 				02D15AC81FFBC7F30069737B /* PhotoViewCell.swift */,
 				0249DBD91FE543400098D510 /* Client.swift */,
+				CC7776052505AE35006F6C32 /* PhotoUser.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -113,6 +117,13 @@
 				02298AC61FD8221F00320302 /* LaunchScreen.storyboard */,
 			);
 			path = Views;
+			sourceTree = "<group>";
+		};
+		6AB99C2BD2F6E89BEF671482 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -153,7 +164,7 @@
 				};
 			};
 			buildConfigurationList = 02298AB21FD8221F00320302 /* Build configuration list for PBXProject "Virtual Tourist" */;
-			compatibilityVersion = "Xcode 10.0";
+			compatibilityVersion = "Xcode 11.4";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -189,6 +200,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				02298AD21FD824A300320302 /* TravelMapViewController.swift in Sources */,
+				CC7776062505AE35006F6C32 /* PhotoUser.swift in Sources */,
 				02E87A621FE7D84800163537 /* ViewController.swift in Sources */,
 				02298AC31FD8221F00320302 /* Virtual_Tourist.xcdatamodeld in Sources */,
 				02298ABB1FD8221F00320302 /* AppDelegate.swift in Sources */,
@@ -343,11 +355,12 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = VWS526K25D;
 				INFOPLIST_FILE = "Virtual Tourist/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "tntstudios.com.br.Virtual-Tourist";
+				PRODUCT_BUNDLE_IDENTIFIER = "leptocode.com-VirtualTourist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -361,11 +374,12 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = VWS526K25D;
 				INFOPLIST_FILE = "Virtual Tourist/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "tntstudios.com.br.Virtual-Tourist";
+				PRODUCT_BUNDLE_IDENTIFIER = "leptocode.com-VirtualTourist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";

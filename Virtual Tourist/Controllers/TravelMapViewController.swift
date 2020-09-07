@@ -13,11 +13,14 @@ class TravelMapViewController: UIViewController, MKMapViewDelegate {
     
     @IBOutlet weak var mapView: MKMapView!
     @IBOutlet weak var footerView: UIView!
+    @IBOutlet var pinRemove: UIBarButtonItem!
+    @IBOutlet var LocationLabel: UILabel!
     
     var pinAnnotation: MKPointAnnotation? = nil
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         mapView.delegate = self
         navigationItem.rightBarButtonItem = editButtonItem
         footerView.isHidden = true
@@ -46,8 +49,6 @@ class TravelMapViewController: UIViewController, MKMapViewDelegate {
             
             pinAnnotation = MKPointAnnotation()
             pinAnnotation!.coordinate = locCoord
-            
-            print("\(#function) Coordinate: \(locCoord.latitude),\(locCoord.longitude)")
         
             mapView.addAnnotation(pinAnnotation!)
             
@@ -110,7 +111,7 @@ extension TravelMapViewController {
     
     // MARK: - MKMapViewDelegate
     
-    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         
         let reuseId = "pin"
         
@@ -128,13 +129,13 @@ extension TravelMapViewController {
         return pinView
     }
     
-    func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
+func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
         if control == view.rightCalloutAccessoryView {
             self.showInfo(withMessage: "No link defined.")
         }
     }
     
-    func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
+func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
         
         guard let annotation = view.annotation else {
             return
@@ -143,14 +144,66 @@ extension TravelMapViewController {
         mapView.deselectAnnotation(annotation, animated: true)
         let lat = String(annotation.coordinate.latitude)
         let lon = String(annotation.coordinate.longitude)
+        
         if let pin = loadPin(latitude: lat, longitude: lon) {
             if isEditing {
                 mapView.removeAnnotation(annotation)
                 CoreDataStack.shared().context.delete(pin)
                 save()
+            
                 return
             }
-            performSegue(withIdentifier: "showAlbum", sender: pin)
-        }
+        
+        var center : CLLocationCoordinate2D = CLLocationCoordinate2D()
+        let latitude: Double = Double("\(lat)")!
+        let longitude: Double = Double("\(lon)")!
+            
+        let ceo: CLGeocoder = CLGeocoder()
+        center.latitude = latitude
+        center.longitude = longitude
+        
+        let loc: CLLocation = CLLocation(latitude:center.latitude, longitude: center.longitude)
+        
+        ceo.reverseGeocodeLocation(loc, completionHandler:
+            {(placemarks, error) in
+               if (error != nil) {
+                print("reverse geodcode fail: \(error!.localizedDescription)")
+               }
+                
+                if placemarks == nil {
+                   return
+                }
+                
+                else {
+                    
+                    let pm = placemarks! as [CLPlacemark]
+                    
+                    if pm.count > 0 {
+                       let pm = placemarks![0]
+                        
+                       var addressString : String = ""
+                       
+                       if pm.locality != nil {
+                        addressString = addressString + pm.locality! + ", "
+                       }
+                       if pm.country != nil {
+                        addressString = addressString + pm.country!
+                       }
+                        
+                       print(addressString)
+                       
+                        self.LocationLabel.text = " Your last visit: " + addressString + " "
+                    
+                    }
+                    
+                }
+                
+             }
+        
+        )
+            
+          performSegue(withIdentifier: "showAlbum", sender: pin)
     }
+
+      }
 }

@@ -109,13 +109,10 @@ extension Client {
             request = NSMutableURLRequest(url: buildURLFromParameters(parameters, withPathExtension: method))
         }
         
-        showActivityIndicator(true)
-        
         /* 4. Make the request */
         let task = session.dataTask(with: request as URLRequest) { (data, response, error) in
             
             func sendError(_ error: String) {
-                self.showActivityIndicator(false)
                 let userInfo = [NSLocalizedDescriptionKey : error]
                 completionHandlerForGET(nil, NSError(domain: "taskForGETMethod", code: 1, userInfo: userInfo))
             }
@@ -143,8 +140,6 @@ extension Client {
                 sendError("No data was returned by the request!")
                 return
             }
-            
-            self.showActivityIndicator(false)
             
             /* 5/6. Parse the data and use the data (happens in completion handler) */
             completionHandlerForGET(data, nil)
@@ -184,14 +179,6 @@ extension Client {
         return "\(minimumLon),\(minimumLat),\(maximumLon),\(maximumLat)"
     }
     
-    /// Show or Hide Network activity indicator.
-    ///
-    /// - Parameter show: use either **true** to show or **false** to hide it
-    private func showActivityIndicator(_ show: Bool) {
-        DispatchQueue.main.async {
-            UIApplication.shared.isNetworkActivityIndicatorVisible = show
-        }
-    }
 }
 
 

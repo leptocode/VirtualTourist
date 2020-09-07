@@ -88,13 +88,10 @@ class PhotoAlbumViewController: UIViewController, MKMapViewDelegate {
         var error: NSError?
         do {
             try fetchedResultsController.performFetch()
-        } catch let error1 as NSError {
-            error = error1
+        } catch let errors as NSError {
+            error = errors
         }
         
-        if let error = error {
-            print("\(#function) Error performing initial fetch: \(error)")
-        }
     }
     
     private func fetchPhotosFromAPI(_ pin: Pin) {
@@ -113,15 +110,13 @@ class PhotoAlbumViewController: UIViewController, MKMapViewDelegate {
             if let photosParsed = photosParsed {
                 self.totalPages = photosParsed.photos.pages
                 let totalPhotos = photosParsed.photos.photo.count
-                print("\(#function) Downloading \(totalPhotos) photos.")
                 self.storePhotos(photosParsed.photos.photo, forPin: pin)
                 if totalPhotos == 0 {
-                    self.updateStatusLabel("No photos found for this location 😢")
+                    self.updateStatusLabel("No pictures found")
                 }
             } else if let error = error {
-                print("\(#function) error:\(error)")
                 self.showInfo(withTitle: "Error", withMessage: error.localizedDescription)
-                self.updateStatusLabel("Something went wrong, please try again 🧐")
+                self.updateStatusLabel("Something went wrong")
             }
         }
     }
@@ -167,8 +162,7 @@ class PhotoAlbumViewController: UIViewController, MKMapViewDelegate {
         do {
             try photos = CoreDataStack.shared().fetchPhotos(predicate, entityName: Photo.name)
         } catch {
-            print("\(#function) error:\(error)")
-            showInfo(withTitle: "Error", withMessage: "Error while lading Photos from disk: \(error)")
+            showInfo(withTitle: "Error", withMessage: "Error while loading: \(error)")
         }
         return photos
     }
@@ -177,8 +171,8 @@ class PhotoAlbumViewController: UIViewController, MKMapViewDelegate {
         
         let landscape = withSize.width > withSize.height
         
-        let space: CGFloat = landscape ? 5 : 3
-        let items: CGFloat = landscape ? 2 : 3
+        let space: CGFloat = landscape ? 6 : 4
+        let items: CGFloat = landscape ? 3 : 4
         
         let dimension = (withSize.width - ((items + 1) * space)) / items
         
@@ -190,7 +184,7 @@ class PhotoAlbumViewController: UIViewController, MKMapViewDelegate {
     
     func updateBottomButton() {
         if selectedIndexes.count > 0 {
-            button.setTitle("Remove Selected", for: .normal)
+            button.setTitle("Remove the Selection", for: .normal)
         } else {
             button.setTitle("New Collection", for: .normal)
         }
